@@ -6,6 +6,11 @@ import sys
 import pandas as pd
 import openpyxl
 
+for arg in sys.argv:
+    print(arg)
+
+print("End of arguments")
+
 directory = './file_input'
 new_excel = './file_input/output.xlsx'
 
@@ -24,21 +29,18 @@ for sheetnum, name in enumerate(text_files, 1):
     lines = []
     # Open file
     with open(os.path.join(directory, name), 'r') as f:
-        print(f"Content of '{name}'")
         # Read content of file
         lines += f.read().split('\n')
 
     excel_df = [x.split(' ') for x in lines]
-    print(excel_df)
 
     workbook = openpyxl.load_workbook(new_excel)
-    workbook.create_sheet(f'sheet_{sheetnum}')
-    sheet = workbook[f'sheet_{sheetnum}']
+    workbook.create_sheet(f'{name}_{sheetnum}')
+    sheet = workbook[f'{name}_{sheetnum}']
 
     for row in excel_df:
         sheet.append(row)
 
-    print(sheet)
     # for row in excel_df:
     workbook.save(new_excel)
 
