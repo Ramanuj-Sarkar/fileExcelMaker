@@ -1,0 +1,3 @@
+the file can have other file names
+it has to end with .txt
+(that can also change)
