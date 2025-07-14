@@ -14,53 +14,54 @@ import openpyxl
 
 def excel_maker(input_folder, excel_file_name):
 
+    # creates Excel workbook with temporary sheet
     workbook = openpyxl.Workbook()
     sheet = workbook.active
     sheet['A1'] = 'TEMP'
     workbook.save(excel_file_name)
 
-    print(os.listdir(input_folder))
-
+    # finds all .txt files
     text_files = [x for x in os.listdir(input_folder) if x[-4:] == '.txt']
-
-    print(text_files)
+    print("Files being checked:", text_files)
 
     for sheetnum, name in enumerate(text_files, 1):
         lines = []
-        # Open file
+        # read content of specific file
         with open(os.path.join(input_folder, name), 'r') as f:
-            # Read content of file
             lines += f.read().split('\n')
 
+        # the rows of the file correspond to Excel rows
+        # the space-separated words correspond to Excel cells
         excel_df = [x.split(' ') for x in lines]
 
+        # each file is put on its own sheet
         workbook = openpyxl.load_workbook(excel_file_name)
         workbook.create_sheet(f'{name}_{sheetnum}')
         sheet = workbook[f'{name}_{sheetnum}']
-
         for row in excel_df:
             sheet.append(row)
 
-        # for row in excel_df:
+        # the Excel is saved now
         workbook.save(excel_file_name)
 
+    # deletes temporary sheet
     workbook.remove(workbook['Sheet'])
     workbook.save(excel_file_name)
 
-for arg in sys.argv:
-    print(arg)
 
-if len(sys.argv) == 3:
+# this starts the actual code
+if len(sys.argv) == 3:  # runs from command line correctly
     excel_maker(sys.argv[1], sys.argv[2])
-elif len(sys.argv) == 1:
-    i = input("You are running it from the IDE. Interesting.")
-    if i == 'Y':
-        excel_maker('./file_input', './file_input/output.xlsx')
-else:
-    print('You have to write, in this order\n'
+else:  # incorrect somehow
+    print('This is supposed to be run from the command line.\n'
+          'You have to write, in this order:\n'
           '* "python"\n'
-          '* "excel_file_maker.py" (the name of the python script)'
+          '* "excel_file_maker.py" (the name of the python script)\n'
           '* the folder which contains the input\n'
-          '* the new excel file being created\n')
+          '* the new excel file being created\n\n'
+          'Assuming the path to the folder is "C:\\inputfolder" '
+          'and the path to the file you want to create is "C:\\excelfile", '
+          'it should look like:\n\n'
+          'python excel_file_maker.py C:\\inputfolder C:\\excelfile')
 
 
