@@ -2,7 +2,7 @@
 # Install the library openpyxl: pip install openpyxl
 
 # Run this from the command line like:
-# python  path\to\excel_file_maker.py  path\to\input_folder  path\to\excel_file_name
+# python  path\to\cmd_filemaker.py  path\to\input_folder  path\to\excel_file_name
 
 # It looks at all the files in the input folder.
 # It deletes the information in the old excel file to create a new one.
@@ -56,12 +56,12 @@ else:  # incorrect somehow
     print('This is supposed to be run from the command line.\n'
           'You have to write, in this order:\n'
           '* "python"\n'
-          '* "excel_file_maker.py" (the name of the python script)\n'
+          '* "cmd_filemaker.py" (the name of the python script)\n'
           '* the folder which contains the input\n'
           '* the new excel file being created\n\n'
           'Assuming the path to the folder is "C:\\inputfolder" '
           'and the path to the file you want to create is "C:\\excelfile", '
           'it should look like:\n\n'
-          'python excel_file_maker.py C:\\inputfolder C:\\excelfile')
+          'python cmd_filemaker.py C:\\inputfolder C:\\excelfile')
 
 
